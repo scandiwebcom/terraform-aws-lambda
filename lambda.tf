@@ -19,7 +19,7 @@ resource "aws_lambda_function" "lambda" {
 
   # Use a generated filename to determine when the source code has changed.
 
-  filename   = "${lookup(data.external.built.result, "filename")}"
+  filename   = "${lookup(data.external.built.result, "filename")}${substr(var.depends_on, 0, 0)}"
   depends_on = ["null_resource.archive"]
 
   # The aws_lambda_function resource has a schema for the environment
@@ -60,7 +60,7 @@ resource "aws_lambda_function" "lambda_with_dl" {
   timeout                        = "${local.timeout}"
   publish                        = "${local.publish}"
   tags                           = "${var.tags}"
-  filename                       = "${lookup(data.external.built.result, "filename")}"
+  filename                       = "${lookup(data.external.built.result, "filename")}${substr(var.depends_on, 0, 0)}"
   depends_on                     = ["null_resource.archive"]
   environment                    = ["${slice( list(var.environment), 0, length(var.environment) == 0 ? 0 : 1 )}"]
 }
@@ -88,7 +88,7 @@ resource "aws_lambda_function" "lambda_with_vpc" {
   timeout                        = "${local.timeout}"
   publish                        = "${local.publish}"
   tags                           = "${var.tags}"
-  filename                       = "${lookup(data.external.built.result, "filename")}"
+  filename                       = "${lookup(data.external.built.result, "filename")}${substr(var.depends_on, 0, 0)}"
   depends_on                     = ["null_resource.archive"]
   environment                    = ["${slice( list(var.environment), 0, length(var.environment) == 0 ? 0 : 1 )}"]
 }
@@ -120,7 +120,7 @@ resource "aws_lambda_function" "lambda_with_dl_and_vpc" {
   timeout                        = "${local.timeout}"
   publish                        = "${local.publish}"
   tags                           = "${var.tags}"
-  filename                       = "${lookup(data.external.built.result, "filename")}"
+  filename                       = "${lookup(data.external.built.result, "filename")}${substr(var.depends_on, 0, 0)}"
   depends_on                     = ["null_resource.archive"]
   environment                    = ["${slice( list(var.environment), 0, length(var.environment) == 0 ? 0 : 1 )}"]
 }

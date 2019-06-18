@@ -120,6 +120,12 @@ variable "lambda_at_edge" {
   default     = false
 }
 
+variable "depends_on" {
+  description = "String which the source code hash resource will use as a dependency. For example - add an interpolated rendered_template content hash here to make the hash wait until the rendered template is generated."
+  type        = "string"
+  default     = "-"
+}
+
 locals {
   publish = "${var.lambda_at_edge ? true : var.publish}"
   timeout = "${var.lambda_at_edge ? min(var.timeout, 5) : var.timeout}"

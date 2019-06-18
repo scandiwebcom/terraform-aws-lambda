@@ -13,13 +13,14 @@ data "external" "archive" {
     module_relpath = "${local.module_relpath}"
     runtime        = "${var.runtime}"
     source_path    = "${var.source_path}"
+    depends_on     = "${var.depends_on}"
   }
 }
 
 # Build the zip archive whenever the filename changes.
 resource "null_resource" "archive" {
   triggers {
-    filename = "${lookup(data.external.archive.result, "filename")}"
+    filename    = "${lookup(data.external.archive.result, "filename")}${substr(var.depends_on, 0, 0)}"
   }
 
   provisioner "local-exec" {
